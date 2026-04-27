@@ -1,0 +1,65 @@
+ StudyNotes App
+
+A simple and efficient web-based note-taking application designed for students to quickly create, edit, and manage study notes. The app mimics digital sticky notes with color coding and stores data locally for offline access.
+
+---
+
+ Features
+
+-  Add new study notes
+-  Edit notes in real-time
+-  Delete notes
+-  Color-coded notes for better organization
+-  Local storage (data persists after refresh)
+-  Timestamp for each note
+
+---
+
+ Technologies Used
+
+- HTML
+- CSS
+- JavaScript (LocalStorage)
+
+---
+
+ How to Run
+
+1. Download or clone this repository
+2. Open "index.html" in any browser
+
+---
+
+ Live Demo
+
+(Enable GitHub Pages and paste your link here)
+
+---
+
+ Project Structure
+
+StudyNotes/
+│── index.html
+
+---
+
+ Future Improvements
+
+-  Search functionality
+-  Pin important notes
+-  Dark mode
+-  Cloud sync (Firebase integration)
+
+---
+
+ Author
+
+Thirumalaivasan
+
+---
+
+📖 Description
+
+StudyNotes is a mini project developed to demonstrate core web development concepts such as DOM manipulation, event handling, and browser-based storage using JavaScript. It provides a lightweight and user-friendly interface for managing notes without requiring an internet connection.
+
+---

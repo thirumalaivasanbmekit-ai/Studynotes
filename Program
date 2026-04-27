@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StudyNotes App</title><style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 20px;
+    }
+
+    .controls {
+        margin: 20px;
+    }
+
+    input {
+        padding: 10px;
+        width: 200px;
+    }
+
+    select {
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #notesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .note {
+        width: 200px;
+        min-height: 120px;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .note textarea {
+        width: 100%;
+        height: 70px;
+        border: none;
+        background: transparent;
+        resize: none;
+        outline: none;
+    }
+
+    .delete-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        color: red;
+        font-weight: bold;
+    }
+
+    .date {
+        font-size: 10px;
+        margin-top: 5px;
+        text-align: right;
+    }
+</style>
+
+</head><body><h1> StudyNotes</h1>
+
+<div class="controls">
+    <input type="text" id="noteInput" placeholder="Write your study note...">
+    <select id="colorSelect">
+        <option value="#fff176">Yellow</option>
+        <option value="#aed581">Green</option>
+        <option value="#81d4fa">Blue</option>
+        <option value="#ff8a80">Red</option>
+    </select>
+    <button onclick="addNote()">Add Note</button>
+</div>
+
+<div id="notesContainer"></div>
+
+<script>
+    // Changed key name to "studynotes"
+    let notes = JSON.parse(localStorage.getItem("studynotes")) || [];
+
+    function saveNotes() {
+        localStorage.setItem("studynotes", JSON.stringify(notes));
+    }
+
+    function renderNotes() {
+        const container = document.getElementById("notesContainer");
+        container.innerHTML = "";
+
+        notes.forEach((note, index) => {
+            const noteDiv = document.createElement("div");
+            noteDiv.className = "note";
+            noteDiv.style.backgroundColor = note.color;
+
+            const textarea = document.createElement("textarea");
+            textarea.value = note.text;
+
+            textarea.addEventListener("input", () => {
+                notes[index].text = textarea.value;
+                saveNotes();
+            });
+
+            const deleteBtn = document.createElement("span");
+            deleteBtn.className = "delete-btn";
+            deleteBtn.innerText = "X";
+
+            deleteBtn.onclick = () => {
+                notes.splice(index, 1);
+                saveNotes();
+                renderNotes();
+            };
+
+            const date = document.createElement("div");
+            date.className = "date";
+            date.innerText = note.date;
+
+            noteDiv.appendChild(deleteBtn);
+            noteDiv.appendChild(textarea);
+            noteDiv.appendChild(date);
+            container.appendChild(noteDiv);
+        });
+    }
+
+    function addNote() {
+        const input = document.getElementById("noteInput");
+        const color = document.getElementById("colorSelect").value;
+
+        if (input.value.trim() === "") {
+            alert("Write something!");
+            return;
+        }
+
+        notes.push({
+            text: input.value,
+            color: color,
+            date: new Date().toLocaleString()
+        });
+
+        input.value = "";
+        saveNotes();
+        renderNotes();
+    }
+
+    renderNotes();
+</script>
+
+</body>
+</html>
